@@ -157,7 +157,8 @@ set cursorcolumn
 set cursorline
 highlight CursorLine   cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
 highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
-
+hi BadWhitespace guifg=gray guibg=red ctermfg=gray ctermbg=red
+au BufRead,BufNewFile *.py*,*.c,*.h match BadWhitespace /\s\+$/
 
 "  tablestop,且table变空格
 set ts=4
@@ -205,3 +206,10 @@ function HeaderPython()
     normal o
 endf
 autocmd bufnewfile *.py call HeaderPython()
+
+"function HeaderPhp()
+"    call setline(1, "<?php")
+"    normal G
+"    normal o
+"endf
+"autocmd bufnewfile *.php call HeaderPhp()
