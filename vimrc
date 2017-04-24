@@ -157,28 +157,28 @@ set cursorcolumn
 set cursorline
 highlight CursorLine   cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
 highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
-hi BadWhitespace guifg=gray guibg=red ctermfg=gray ctermbg=red
-au BufRead,BufNewFile *.py*,*.c,*.h match BadWhitespace /\s\+$/
+"hi BadWhitespace guifg=gray guibg=red ctermfg=gray ctermbg=red
+"au BufRead,BufNewFile *.py*,*.c,*.h match BadWhitespace /\s\+$/
 
 "  tablestop,且table变空格
 set ts=4
 set expandtab
 
 "  python php代码缩进
-au BufNewFile,BufRead *.py *.php
-\ set tabstop=4
-\ set softtabstop=4
-\ set shiftwidth=4
-\ set textwidth=79
-\ set expandtab
-\ set autoindent
-\ set fileformat=unix
-
-"  网页代码缩进
-au BufNewFile,BufRead *.js, *.html, *.css
-\ set tabstop=2
-\ set softtabstop=2
-\ set shiftwidth=2
+"au BufNewFile,BufRead *.py, *.php
+"\ set tabstop=4
+"\ set softtabstop=4
+"\ set shiftwidth=4
+"\ set textwidth=79
+"\ set expandtab
+"\ set autoindent
+"\ set fileformat=unix
+"
+""  网页代码缩进
+"au BufNewFile,BufRead *.js, *.html, *.css
+"\ set tabstop=2
+"\ set softtabstop=2
+"\ set shiftwidth=2
 
 
 "  utf-8中文帮助
@@ -202,14 +202,43 @@ set ignorecase
 function HeaderPython()
     call setline(1, "#!/usr/bin/env python")
     call append(1, "# -*- coding: utf-8 -*-")
+    call append(2, "__author__ = 'Ye Junyu'")
+    call append(3, "")
     normal G
     normal o
 endf
 autocmd bufnewfile *.py call HeaderPython()
 
-"function HeaderPhp()
-"    call setline(1, "<?php")
-"    normal G
-"    normal o
-"endf
-"autocmd bufnewfile *.php call HeaderPhp()
+"逗号之间不能加空格，会报错
+autocmd BufNewFile *.php,*.html exec ":call SetTitle()"
+function SetTitle()  
+    if &filetype == 'php'  
+        call setline(1,"/********************************")  
+        call append(line("."),"/* File Name:".expand("%"))  
+        call append(line(".")+1,"/* Author:Ye Junyu")  
+        call append(line(".")+2,"/* Email:yyyejunyu@gmail.com")  
+        call append(line(".")+3,"/* Create Time:".strftime("%Y-%m-%d %H:%M"))  
+        call append(line(".")+4,"/********************************")  
+        call append(line(".")+5,"<?php")  
+        call append(line(".")+6,"    ")  
+        call append(line(".")+7,"?>")  
+        normal G
+        normal o
+    endif  
+    if &filetype == 'html'  
+        call setline(1,"<!DOCTYPE html>")  
+        call append(line("."),"<html lang=\"zh-CN\">")  
+        call append(line(".")+1,"<head>")  
+        call append(line(".")+2,"<meta content=\"text/html; charset=UTF-8\" http-equiv=\"Content-Type\">")  
+        call append(line(".")+3,"<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">")  
+        call append(line(".")+4,"<title>yy</title>")  
+        call append(line(".")+5,"<meta name=\"Keywords\" content=\"\">")  
+        call append(line(".")+6,"<meta name=\"description\" content=\"\" />")  
+        call append(line(".")+7,"</head>")  
+        call append(line(".")+8,"")  
+        call append(line(".")+9,"<body>")  
+        call append(line(".")+10,"")  
+        call append(line(".")+11,"</body>")  
+        call append(line(".")+12,"</html>")  
+    endif  
+endfunction
