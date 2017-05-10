@@ -1,3 +1,4 @@
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim 
 ## 光标移动
 	
 	hjkl
