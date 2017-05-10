@@ -242,3 +242,6 @@ function SetTitle()
         call append(line(".")+12,"</html>")  
     endif  
 endfunction
+set encoding=utf-8
+set termencoding=utf-8
+set fileencodings=utf-8,gbk,latin1
