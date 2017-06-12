@@ -1,3 +1,4 @@
+" git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "  必须配置
 set nocompatible
 filetype off
@@ -39,11 +40,6 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 
-" 主题
-let g:molokai_original = 1
-let g:rehash256 = 1
-set background=dark
-colorscheme molokai
 
 " Plugin indentLine settings.
 let g:indentLine_char = "┆"
@@ -165,25 +161,22 @@ set ts=4
 set expandtab
 
 "  python php代码缩进
-"au BufNewFile,BufRead *.py, *.php
-"\ set tabstop=4
-"\ set softtabstop=4
-"\ set shiftwidth=4
-"\ set textwidth=79
-"\ set expandtab
-"\ set autoindent
-"\ set fileformat=unix
-"
+au BufNewFile,BufRead *.py  
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
+
 ""  网页代码缩进
-"au BufNewFile,BufRead *.js, *.html, *.css
-"\ set tabstop=2
-"\ set softtabstop=2
-"\ set shiftwidth=2
+au BufNewFile,BufRead *.js,*.html,*.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
 
 
-"  utf-8中文帮助
-set encoding=utf-8
-set helplang=cn
 
 " 第一行确保了在你完成操作之后，自动补全窗口不会消失
 " 第二行则定义了“转到定义”的快捷方式。
@@ -210,7 +203,7 @@ endf
 autocmd bufnewfile *.py call HeaderPython()
 
 "逗号之间不能加空格，会报错
-autocmd BufNewFile *.php,*.html exec ":call SetTitle()"
+autocmd BufNewFile *.php,*.html,*.js exec ":call SetTitle()"
 function SetTitle()  
     if &filetype == 'php'  
         call setline(1,"/********************************")  
@@ -241,7 +234,27 @@ function SetTitle()
         call append(line(".")+11,"</body>")  
         call append(line(".")+12,"</html>")  
     endif  
+    if &filetype == 'js'
+        call setline(1,"/********************************")  
+        call append(line("."),"/* File Name:".expand("%"))  
+        call append(line(".")+1,"/* Author:Ye Junyu")  
+        call append(line(".")+2,"/* Email:yyyejunyu@gmail.com")  
+        call append(line(".")+3,"/* Create Time:".strftime("%Y-%m-%d %H:%M"))  
+        call append(line(".")+4,"/********************************")  
+        normal G
+        normal o
+    endif
 endfunction
+
+"  utf-8中文帮助
 set encoding=utf-8
+set helplang=cn
 set termencoding=utf-8
 set fileencodings=utf-8,gbk,latin1
+
+" 主题
+let g:molokai_original = 1
+let g:rehash256 = 1
+set t_Co=256
+set background=dark
+colorscheme molokai
